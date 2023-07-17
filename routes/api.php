@@ -18,6 +18,5 @@ use App\Http\Controllers\LoginController;
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    // return $request->user();
-    return 'something';
+    return $request->user();
 });
