@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MovieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,8 @@ use App\Http\Controllers\LoginController;
 */
 
 Route::post('/login', [LoginController::class, 'login']);
+
+Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

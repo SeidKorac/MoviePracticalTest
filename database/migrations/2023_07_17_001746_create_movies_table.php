@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('synopsis')->nullable();
             $table->string('director')->nullable();
-            $table->text('imageUrl')->nullable();
             $table->integer('duration')->nullable();
             $table->date('releaseDate')->nullable();
             $table->timestamps();

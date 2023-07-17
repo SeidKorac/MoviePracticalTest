@@ -14,7 +14,6 @@ class Movie extends Model
         'slug',
         'synopsis',
         'director',
-        'imageUrl',
         'duration',
         'releaseDate',
     ];
