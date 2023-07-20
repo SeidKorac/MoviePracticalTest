@@ -21,4 +21,22 @@ class MovieController extends Controller
         }
     }
 
+    public function store(Request $request)
+    {
+        $validation = $request->validate([
+            'title' => 'required|string',
+            'synopsis' => 'required|string',
+            'director' => 'required|string',
+            'duration' => 'integer',
+            'releaseDate' => 'date',
+        ]);
+
+        try {
+            $movie = Movie::create($request->all());
+            return new MovieResource($movie);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
 }
