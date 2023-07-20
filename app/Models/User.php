@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function favoriteMovies()
+    {
+        return $this->belongsToMany(Movie::class, 'favorite_movies', 'user_id', 'movie_id');
+    }
 }

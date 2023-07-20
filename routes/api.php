@@ -27,4 +27,5 @@ Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', [ProfileController::class, 'show']);
     Route::post('/logout', [LogoutController::class, 'logout']);
+    Route::post('/movies/{movie}/favorite', [MovieController::class, 'favorite']);
 });

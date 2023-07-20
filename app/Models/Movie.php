@@ -45,4 +45,9 @@ class Movie extends Model
     {
         return $this->belongsToMany(MovieGenre::class);
     }
+
+    public function favoritedUsers()
+    {
+        return $this->belongsToMany(User::class, 'favorite_movies', 'movie_id', 'user_id');
+    }
 }
