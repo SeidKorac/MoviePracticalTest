@@ -8,6 +8,8 @@ use Exception;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\MovieCollection;
 use App\Http\Resources\MovieResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class MovieController extends Controller
 {
@@ -18,6 +20,24 @@ class MovieController extends Controller
             return MovieResource::collection(Movie::paginate());
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function showFavorites()
+    {
+        try {
+            $user = Auth::user();
+            $favoriteMovies = Cache::get('user_id_'.$user->id);
+
+            if (!$favoriteMovies) {
+                $favoriteMovies = $user->favoriteMovies()->get();
+                dd($favoriteMovies);
+                Cache::put('user_id_' . $user->id, $favoriteMovies);
+            }
+
+            return MovieResource::collection($favoriteMovies);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 404);
         }
     }
 

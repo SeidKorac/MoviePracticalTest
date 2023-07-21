@@ -28,4 +28,6 @@ Route::middleware('auth:api')->group(function () {
     Route::get('/user', [ProfileController::class, 'show']);
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::post('/movies/{movie}/favorite', [MovieController::class, 'favorite']);
+    Route::post('/movies/{movie}/unfavorite', [MovieController::class, 'unfavorite']);
+    Route::get('/movies/favorites', [MovieController::class, 'showFavorites']);
 });
