@@ -10,6 +10,8 @@ use App\Http\Resources\MovieCollection;
 use App\Http\Resources\MovieResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use App\Http\Requests\CreateMovieRequest;
+use App\Http\Requests\UpdateMovieRequest;
 
 class MovieController extends Controller
 {
@@ -23,6 +25,15 @@ class MovieController extends Controller
         }
     }
 
+    public function show(Movie $movie)
+    {
+        try {
+            return new MovieResource($movie);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
     public function showFavorites()
     {
         try {
@@ -30,12 +41,11 @@ class MovieController extends Controller
             $favoriteMovies = Cache::get('user_id_'.$user->id);
 
             if (!$favoriteMovies) {
-                $favoriteMovies = $user->favoriteMovies()->get();
-                dd($favoriteMovies);
-                Cache::put('user_id_' . $user->id, $favoriteMovies);
+                $favoriteMovies = $user->favoriteMovies();
+                Cache::put('user_id_' . $user->id, $favoriteMovies->get());
             }
 
-            return MovieResource::collection($favoriteMovies);
+            return MovieResource::collection($favoriteMovies->paginate()->get());
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -51,19 +61,48 @@ class MovieController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(CreateMovieRequest $request)
     {
-        $validation = $request->validate([
-            'title' => 'required|string',
-            'synopsis' => 'required|string',
-            'director' => 'required|string',
-            'duration' => 'integer',
-            'releaseDate' => 'date',
-        ]);
-
         try {
+            $movie = new Movie([
+                'title' => $request->title,
+                'synopsis' => $request->synopsis,
+                'director' => $request->director,
+                'duration' => $request->duration,
+                'releaseDate' => $request->releaseDate,
+            ]);
+            $movie->movieGenres()->attach($request->movieGenres);
+
             $movie = Movie::create($request->all());
             return new MovieResource($movie);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function update(UpdateMovieRequest $request, Movie $movie)
+    {
+        try {
+            $movie->update([
+                'title' => $request->title,
+                'synopsis' => $request->synopsis,
+                'director' => $request->director,
+                'duration' => $request->duration,
+                'releaseDate' => $request->releaseDate,
+            ]);
+            $movie->movieGenres()->sync($request->movieGenres);
+
+            return new MovieResource($movie);
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function destroy(Movie $movie)
+    {
+        try {
+            $movie->delete();
+            return response()->json($movie, 204);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
