@@ -7,6 +7,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MovieActionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,6 @@ use App\Http\Controllers\ProfileController;
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
-Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
-Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', [ProfileController::class, 'show'])->name('user.show');
@@ -41,3 +40,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/movies/{movie}/unfollow', [MovieActionController::class, 'unfollow'])->name('movies.unfollow');
     Route::get('/movies/followed', [MovieController::class, 'showFollowedMovies'])->name('movies.followed');
 });
+
+
+Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
+Route::get('/movies/{movie}', [MovieController::class, 'show'])->name('movies.show');

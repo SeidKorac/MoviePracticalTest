@@ -19,7 +19,9 @@ class MovieController extends Controller
     public function index()
     {
         try {
-            return MovieResource::collection(Movie::all()->filter()->paginate()->get());
+            $per_page = request()->per_page ?? 10;
+            $movies = Movie::with('genre')->filter()->paginate($per_page)->withQueryString();
+            return MovieResource::collection($movies);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -28,7 +30,7 @@ class MovieController extends Controller
     public function show(Movie $movie)
     {
         try {
-            return new MovieResource($movie);
+            return new MovieResource($movie->load('genre'));
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -37,15 +39,16 @@ class MovieController extends Controller
     public function showFavorites()
     {
         try {
+            $per_page = request()->per_page ?? 10;
             $user = Auth::user();
             $favoriteMovies = Cache::get('user_id_'.$user->id)->filter();
 
-            if (!$favoriteMovies) {
+            if ($favoriteMovies->isEmpty()) {
                 $favoriteMovies = $user->favoriteMovies()->filter();
                 Cache::put('user_id_' . $user->id, $favoriteMovies->get());
             }
 
-            return MovieResource::collection($favoriteMovies->paginate()->get());
+            return MovieResource::collection($favoriteMovies->load('favoritedUsers')->toQuery()->with('genre')->paginate($per_page)->withQueryString());
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -55,7 +58,9 @@ class MovieController extends Controller
     {
         try {
             $user = Auth::user();
-            return MovieResource::collection($user->followedMovies()->filter()->paginate()->get());
+            $per_page = request()->per_page ?? 10;
+            $movies = $user->followedMovies()->with('genre')->filter()->paginate($per_page)->withQueryString();
+            return MovieResource::collection($movies);
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -71,7 +76,7 @@ class MovieController extends Controller
                 'duration' => $request->duration,
                 'releaseDate' => $request->releaseDate,
             ]);
-            $movie->movieGenres()->attach($request->movieGenres);
+            $movie->genre()->attach($request->movieGenres);
 
             $movie = Movie::create($request->all());
             return new MovieResource($movie);
@@ -90,7 +95,7 @@ class MovieController extends Controller
                 'duration' => $request->duration,
                 'releaseDate' => $request->releaseDate,
             ]);
-            $movie->movieGenres()->sync($request->movieGenres);
+            $movie->genre()->sync($request->movieGenres);
 
             return new MovieResource($movie);
         } catch (Exception $e) {

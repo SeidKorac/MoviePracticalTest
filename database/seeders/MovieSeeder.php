@@ -14,7 +14,11 @@ class MovieSeeder extends Seeder
      */
     public function run(): void
     {
-        Movie::factory(10)->create();
+        Movie::factory()->create([
+            'title' => 'Test Movie',
+        ]);
+        
+        Movie::factory(9)->create();
 
         Movie::all()->each(function ($movie) {
             $genres = MovieGenre::inRandomOrder()->take(rand(1, 3))->pluck('id');

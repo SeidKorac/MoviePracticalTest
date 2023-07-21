@@ -61,7 +61,7 @@ class MovieActionController extends Controller
         return response()->json(['message' => 'Successfully unfavorited movie']);
     }
 
-    public function followMovie(Movie $movie)
+    public function follow(Movie $movie)
     {
         $user = Auth::user();
 
@@ -74,7 +74,7 @@ class MovieActionController extends Controller
         return response()->json(['message' => 'Successfully followed movie']);
     }
 
-    public function unfollowMovie(Movie $movie)
+    public function unfollow(Movie $movie)
     {
         $user = Auth::user();
 
