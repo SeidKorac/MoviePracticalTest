@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7bf5314815fd712876e7038122543734",
+    "content-hash": "7b4d879d9b7d3e27f4c564322b13e4f8",
     "packages": [
         {
             "name": "brick/math",
@@ -2419,6 +2419,63 @@
                 }
             ],
             "time": "2021-06-28T04:27:21+00:00"
+        },
+        {
+            "name": "mehradsadeghi/laravel-filter-querystring",
+            "version": "v1.1.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mehradsadeghi/laravel-filter-querystring.git",
+                "reference": "704ad4f257e9319508defddbf9288556b6da8715"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mehradsadeghi/laravel-filter-querystring/zipball/704ad4f257e9319508defddbf9288556b6da8715",
+                "reference": "704ad4f257e9319508defddbf9288556b6da8715",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.*|6.*|7.*|8.*|9.*|10.*",
+                "php": "^7.1|^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "helpers/helpers.php"
+                ],
+                "psr-4": {
+                    "Mehradsadeghi\\FilterQueryString\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mehrad Sadeghi",
+                    "email": "mehrad177@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Filter your queries based on url query string parameters like a breeze.",
+            "homepage": "https://github.com/mehradsadeghi/laravel-filter-querystring",
+            "keywords": [
+                "filter",
+                "filter-query-string",
+                "filter-querystring",
+                "query",
+                "query-string",
+                "querystring"
+            ],
+            "support": {
+                "issues": "https://github.com/mehradsadeghi/laravel-filter-querystring/issues",
+                "source": "https://github.com/mehradsadeghi/laravel-filter-querystring/tree/v1.1.12"
+            },
+            "time": "2023-02-15T13:06:24+00:00"
         },
         {
             "name": "monolog/monolog",

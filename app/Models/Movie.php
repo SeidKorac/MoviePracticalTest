@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
+use Mehradsadeghi\FilterQueryString\FilterQueryString;
 
 class Movie extends Model
 {
-    use HasFactory, hasSlug;
+    use HasFactory, hasSlug, FilterQueryString;
 
     protected $fillable = [
         'title',
@@ -18,6 +19,19 @@ class Movie extends Model
         'director',
         'duration',
         'releaseDate',
+    ];
+
+    protected $filters = [
+        'sort',
+        'greater',
+        'greater_or_equal',
+        'less',
+        'less_or_equal',
+        'between',
+        'not_between',
+        'in',
+        'not_in',
+        'like',
     ];
 
     /**

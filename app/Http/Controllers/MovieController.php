@@ -19,7 +19,7 @@ class MovieController extends Controller
     public function index()
     {
         try {
-            return MovieResource::collection(Movie::paginate());
+            return MovieResource::collection(Movie::all()->filter()->paginate()->get());
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
@@ -38,10 +38,10 @@ class MovieController extends Controller
     {
         try {
             $user = Auth::user();
-            $favoriteMovies = Cache::get('user_id_'.$user->id);
+            $favoriteMovies = Cache::get('user_id_'.$user->id)->filter();
 
             if (!$favoriteMovies) {
-                $favoriteMovies = $user->favoriteMovies();
+                $favoriteMovies = $user->favoriteMovies()->filter();
                 Cache::put('user_id_' . $user->id, $favoriteMovies->get());
             }
 
@@ -55,7 +55,7 @@ class MovieController extends Controller
     {
         try {
             $user = Auth::user();
-            return MovieResource::collection($user->followedMovies()->paginate()->get());
+            return MovieResource::collection($user->followedMovies()->filter()->paginate()->get());
         } catch (Exception $e) {
             return response()->json($e->getMessage(), $e->getCode());
         }
