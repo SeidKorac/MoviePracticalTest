@@ -25,7 +25,7 @@ class UpdateMovieRequest extends ApiFormRequest
             'director' => 'string',
             'duration' => 'numeric',
             'releaseDate' => 'date',
-            'movieGenre' => 'array',
+            'movieGenres' => 'array',
         ];
     }
 
