@@ -32,13 +32,13 @@ Route::middleware('auth:api')->group(function () {
     Route::put('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
     Route::delete('/movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
 
+    Route::get('/movies/favorites', [MovieController::class, 'showFavorites'])->name('movies.favorites');
     Route::post('/movies/{movie}/favorite', [MovieActionController::class, 'favorite'])->name('movies.favorite');
     Route::post('/movies/{movie}/unfavorite', [MovieActionController::class, 'unfavorite'])->name('movies.unfavorite');
-    Route::get('/movies/favorites', [MovieController::class, 'showFavorites'])->name('movies.favorites');
 
+    Route::get('/movies/followed', [MovieController::class, 'showFollowedMovies'])->name('movies.followed');
     Route::post('/movies/{movie}/follow', [MovieActionController::class, 'follow'])->name('movies.follow');
     Route::post('/movies/{movie}/unfollow', [MovieActionController::class, 'unfollow'])->name('movies.unfollow');
-    Route::get('/movies/followed', [MovieController::class, 'showFollowedMovies'])->name('movies.followed');
 });
 
 

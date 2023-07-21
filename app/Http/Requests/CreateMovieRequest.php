@@ -20,7 +20,7 @@ class CreateMovieRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
+            'title' => 'required|string|unique:movies',
             'synopsis' => 'string',
             'director' => 'string',
             'duration' => 'numeric',

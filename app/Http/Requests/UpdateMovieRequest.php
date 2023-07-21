@@ -20,7 +20,7 @@ class UpdateMovieRequest extends ApiFormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string',
+            'title' => 'string|required|unique:movies,title,'.$this->movie->id,
             'synopsis' => 'string',
             'director' => 'string',
             'duration' => 'numeric',

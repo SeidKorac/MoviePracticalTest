@@ -23,7 +23,7 @@ class Handler extends ExceptionHandler
 
     public function register()
     {
-        $this->renderable(function (Throwable $e) {
+        $this->renderable(function (Exception $e) {
             return response(['error' => $e->getMessage()], $e->getCode() ?: 400);
         });
     }
