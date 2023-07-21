@@ -43,7 +43,7 @@ class MovieTest extends TestCase
                     'genre' => [
                         '*' => [
                             'id',
-                            'genre'
+                            'name'
                         ],
                     ],
                 ]
@@ -73,7 +73,7 @@ class MovieTest extends TestCase
                 'genre' => [
                     '*' => [
                         'id',
-                        'genre'
+                        'name'
                     ],
                 ],
             ]
