@@ -60,4 +60,30 @@ class MovieActionController extends Controller
 
         return response()->json(['message' => 'Successfully unfavorited movie']);
     }
+
+    public function followMovie(Movie $movie)
+    {
+        $user = Auth::user();
+
+        try {
+            $user->followedMovies()->attach($movie->id);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Movie already followed']);
+        }
+
+        return response()->json(['message' => 'Successfully followed movie']);
+    }
+
+    public function unfollowMovie(Movie $movie)
+    {
+        $user = Auth::user();
+
+        try {
+            $user->followedMovies()->detach($movie->id);
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Movie already unfollowed']);
+        }
+
+        return response()->json(['message' => 'Successfully unfollowed movie']);
+    }
 }

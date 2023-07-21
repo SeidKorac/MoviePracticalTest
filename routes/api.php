@@ -29,5 +29,8 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/logout', [LogoutController::class, 'logout']);
     Route::post('/movies/{movie}/favorite', [MovieController::class, 'favorite']);
     Route::post('/movies/{movie}/unfavorite', [MovieController::class, 'unfavorite']);
+    Route::post('/movies/{movie}/follow', [MovieController::class, 'follow']);
+    Route::post('/movies/{movie}/unfollow', [MovieController::class, 'unfollow']);
     Route::get('/movies/favorites', [MovieController::class, 'showFavorites']);
+    Route::get('/movies/followed', [MovieController::class, 'showFollowedMovies']);
 });

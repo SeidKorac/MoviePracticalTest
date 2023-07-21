@@ -37,7 +37,17 @@ class MovieController extends Controller
 
             return MovieResource::collection($favoriteMovies);
         } catch (Exception $e) {
-            return response()->json($e->getMessage(), 404);
+            return response()->json($e->getMessage(), $e->getCode());
+        }
+    }
+
+    public function showFollowedMovies()
+    {
+        try {
+            $user = Auth::user();
+            return MovieResource::collection($user->followedMovies()->paginate()->get());
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), $e->getCode());
         }
     }
 

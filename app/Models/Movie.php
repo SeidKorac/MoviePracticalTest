@@ -50,4 +50,9 @@ class Movie extends Model
     {
         return $this->belongsToMany(User::class, 'favorite_movies', 'movie_id', 'user_id');
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followed_movies', 'movie_id', 'user_id');
+    }
 }
